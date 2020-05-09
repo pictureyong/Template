@@ -21,7 +21,7 @@ public:
 
     void Start() {
         for (int i = 0;i < _thread_num; ++i ) {
-            std::thread th(&CThreadPool::Run, this);
+            std::thread th(&CThreadPool::Run, this); // 类成员函数必需加 &
             _threads.push_back(std::move(th)); // std::thread 只支持移动语意的复制构造函数
         }
     }
