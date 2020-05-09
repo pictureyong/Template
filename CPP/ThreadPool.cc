@@ -22,7 +22,7 @@ public:
     void Start() {
         for (int i = 0;i < _thread_num; ++i ) {
             std::thread th(&CThreadPool::Run, this);
-            _threads.push_back(std::move(th));
+            _threads.push_back(std::move(th)); // std::thread 只支持移动语意的复制构造函数
         }
     }
 
@@ -54,7 +54,7 @@ public:
 
     void AddJob(const std::function<void()>& func) {
         MutexLock lock(_mutex);
-        _functions.push(func);
+        _functions.push(std::move(func));
         _condition.notify_one();
     }
 
